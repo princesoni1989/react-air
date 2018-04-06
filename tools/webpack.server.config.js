@@ -10,7 +10,7 @@ export default merge.smart(common, {
   name: "server",
   target: "node",
   entry: {
-    server: ["@babel/polyfill", "./src/server.js"]
+    server: ["./src/server.js"]
   },
   mode: isDebug ? "development" : "production",
   output: {
