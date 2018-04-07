@@ -6,10 +6,10 @@
   "scripts": {
     "flow": "flow",
     "lint": "eslint src/",
-    "build": "babel-node tools/runner build",
-    "runserve": "babel-node tools/runner runServer",
-    "serve": "babel-node tools/runner build --serve",
-    "start": "babel-node tools/runner serve",
+    "build": "babel-node setup/runner build",
+    "runserve": "babel-node setup/runner runServer",
+    "serve": "babel-node setup/runner build --serve",
+    "start": "babel-node setup/runner serve",
     "test": "jest --config jest.config.js",
     "test-cover": "npm run test -- --coverage",
     "coverage": "yarn run test-cover"
@@ -28,6 +28,7 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.0",
     "mongoose": "^5.0.12",
+    "pretty-error": "^2.1.1",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-cookies": "^0.1.0",
