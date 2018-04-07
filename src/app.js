@@ -3,6 +3,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 
+import {port} from "./config"
 import {
   serverRendering,
   serverRenderingError
@@ -26,9 +27,9 @@ app.get("*", serverRendering);
 app.use((err, req, res, next) => serverRenderingError(err, req, res, next));
 
 if(!module.hot){
-	app.listen(4848, () => {
-	  console.log("Server started at port 4848");
-	});	
+	app.listen(port, () => {
+	  console.log(`Server started at port 4848 ${port}`);
+	});
 }
 
 
