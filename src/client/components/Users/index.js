@@ -20,7 +20,7 @@ class Users extends Component {
   }
 
   componentDidMount() {
-   this.props.getUsers({'x-access-token': AuthService.getToken()});
+   this.props.getUsers({'authorization': `Bearer ${AuthService.getToken()}`});
   }
 
   logOut = () => {

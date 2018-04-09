@@ -20,7 +20,7 @@ export default function callApi({path, method = 'get', body, query, headers}) {
       return json;
     })
     .then(
-      response => response,
+      response => (response),
       error => error
     );
 }

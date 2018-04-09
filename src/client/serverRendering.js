@@ -47,7 +47,6 @@ export async function serverRendering(req, res, next) {
 }
 
 export async function serverRenderingError(err, req, res) {
-  console.log(printError.render(err))
   const markUp = ReactDom.renderToString(<ErrorPage error={err}/>)
   const data = {
     title: 'Internal Server Error',

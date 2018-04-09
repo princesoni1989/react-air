@@ -11,7 +11,7 @@ export const staticAssetName = isDebug ? '[path][name].[ext]?[hash:8]' : '[hash:
 export default {
   context: path.resolve(__dirname, ".."),
   resolve: {
-    modules: ["node_modules", "src", "src/client"],
+    modules: ["node_modules", "src", "src/client", "src/server"],
   },
   module: {
     rules: [

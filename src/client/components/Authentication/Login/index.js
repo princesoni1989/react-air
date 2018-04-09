@@ -37,13 +37,10 @@ class Login extends Component {
   };
   handleLogin = async() => {
     const {inputs: {email, password}} = this.state;
-    console.log(email, password)
-
     await  this.props.userLogin({
       email,
       password,
     });
-    console.log(this.props.response.token, "this.props.response.token")
     AuthService.setToken(this.props.response.token)
     this.props.history.push('/users')
   };

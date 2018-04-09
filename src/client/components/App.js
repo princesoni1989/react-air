@@ -9,7 +9,7 @@ import "../styles/core.scss";
 
 class App extends Component {
   componentDidMount() {
-   this.props.fetchLoggedInUsers({'x-access-token': AuthService.getToken()});
+   this.props.fetchLoggedInUsers({'authorization': `Bearer ${AuthService.getToken()}`});
   }
   render() {
     const { loggedInUser } = this.props;

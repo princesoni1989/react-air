@@ -3,6 +3,7 @@ import {
 } from '../constants';
 import endpoints from '../endpoints/users';
 import callApi from '../util/apiCaller';
+import AuthService from 'client/services/authService'
 
 function users (response) {
   return {
@@ -11,8 +12,7 @@ function users (response) {
   };
 }
 
-export default function fetchUsers (headers) {
-  console.log("caleed>>>>>>>>>>>>")
+export default function fetchUsers (headers = {'authorization': `Bearer ${AuthService.getToken()}`}) {
   return dispatch => {
     return callApi({
         path: endpoints.users.path,
