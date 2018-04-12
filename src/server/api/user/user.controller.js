@@ -18,7 +18,7 @@ export function signUpUser(req, res) {
 
 
 export function findUsers(req, res) {
-  userService.findusers()
+  userService.findUsers()
     .then(users => res.sendSuccess(SUCCESS_READ_OPERATION, users))
     .catch(err => res.sendError(UN_PROCESSABLE_ENTITY, err))
 }

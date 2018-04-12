@@ -12,6 +12,6 @@ export function signUpUser(user) {
 }
 
 
-export function findusers() {
+export function findUsers() {
   return userModel.find({}, '-salt -password').exec();
 }

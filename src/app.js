@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import compression from "compression";
 import mongoose from 'mongoose';
+import {buildSchema} from "graphql"
+import expressGraphQL from "express-graphql"
 
 import config from "server/config";
 import bootstrap from "server/bootstrap"
@@ -11,7 +13,8 @@ import {
   serverRendering,
   serverRenderingError
 } from "client/serverRendering"
-import routes from 'server/routes';
+//import routes from 'server/routes';
+import schema from "server/graphql";
 
 //setting up mongo db connection
 mongoose.connect(config.mongo.url, config.mongo.options);
@@ -29,7 +32,20 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bootstrap.apiResponseGenerator)
 //server api
-app.use('/api', routes);
+//app.use('/api', routes);
+
+
+//graph ql routes
+app.use(
+  '/graphql',
+  expressGraphQL(req => ({
+    schema,
+    graphiql: __DEV__,
+    rootValue: { request: req },
+    pretty: __DEV__,
+  })),
+);
+
 
 //route for server side rendering page
 app.get("*", serverRendering);
