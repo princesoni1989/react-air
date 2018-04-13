@@ -1,6 +1,5 @@
 import mongoose  from 'mongoose';
 import crypto from 'crypto';
-mongoose.Promise = Promise;
 
 let {Schema} = mongoose;
 let UserSchema = new Schema({
