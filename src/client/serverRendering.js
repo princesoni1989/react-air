@@ -9,11 +9,13 @@ import fetchData from "./util/fetchData"
 import configureStore from "./store";
 import routes from "components/routes";
 import assets from "./assets.json"; // eslint-disable-line import/no-unresolved
+import cookie from 'react-cookies'
 
 const printError = new prettyError();
 export async function serverRendering(req, res, next) {
   try {
     const store = configureStore()
+    const unplug = cookie.plugToRequest(req, res)
     const markUp = ReactDom.renderToString(
       <App store={store} location={req.url} context={{}}/>
     )

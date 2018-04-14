@@ -28,14 +28,11 @@ app.use((err, req, res, next) => serverRenderingError(err, req, res, next));
 
 if(!module.hot){
 	app.listen(port, () => {
-	  console.log(`Server started at port 4848 ${port}`);
+	  console.log(`Server started at port ${port}`);
 	});
 }
 
-
-
 if (module.hot) {
-  module.hot.accept();
   app.hot = module.hot;
 }
 

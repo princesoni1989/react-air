@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 
-const Auth = () => (Component) => {
+const Auth = () => (WrappedComponent) => {
     class AuthWrapper extends Component {
         render() {
-            return <Component {...this.props}/>
+            return <WrappedComponent {...this.props}/>
         }
     }
     const mapStateToProps = (state) => ({
