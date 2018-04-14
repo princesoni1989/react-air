@@ -36,9 +36,10 @@ class SignUp extends Component {
     });
   }
 
-  handleSignUp = () => {
+  handleSignUp = async() => {
     let {inputs: {name, email, password}} =  this.state;
-    this.props.userSignUp({name, email, password});
+    await this.props.userSignUp({name, email, password});
+    this.props.history.push('/users')
   }
 
   render() {
