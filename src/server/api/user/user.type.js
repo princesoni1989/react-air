@@ -15,9 +15,6 @@ export default new GraphQLObjectType({
     },
     email: {
       type: GraphQLString
-    },
-    password: {
-      type: GraphQLString
     }
   })
 })

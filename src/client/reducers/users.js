@@ -9,7 +9,7 @@ const initialState = {
 const users = function (state = initialState, action) {
   switch (action.type) {
     case GET_USERS: {
-      let list = action.response && action.response.success && action.response.success.data
+      let list = action.response
       return {
           userList: list
       };

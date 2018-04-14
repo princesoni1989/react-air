@@ -8,6 +8,7 @@ import {
 
 import endpoints from '../endpoints/authentication';
 import callApi from '../util/apiCaller';
+import SignUpUser from 'components/Authentication/SignUp/SignUp.graphql'
 
 function sendResult (type, response) {
   return {
@@ -40,18 +41,29 @@ export default function login (data) {
   };
 }
 
-export function signUp (data) {
-  return dispatch => {
-    return callApi({
-        path: endpoints.signup.path,
-        method: endpoints.signup.method,
-        body: data,
-      }
-    ).then((response) => {
-      dispatch(sendResult(SIGNUP_SUCCESS, response));
+export function signUp (payload) {
+  return (dispatch, getState, { client }) => {
+    const mutationResult = client.mutate({
+      mutation: SignUpUser,
+      variables: payload
+    })
+
+    return mutationResult.then(response => {
+      dispatch(sendResult(SIGNUP_SUCCESS, response.data.signUp));
     }).catch(error => {
       dispatch(sendResult(SIGNUP_FAILURE, error));
     });
+    
+    // return callApi({
+    //     path: endpoints.signup.path,
+    //     method: endpoints.signup.method,
+    //     body: data,
+    //   }
+    // ).then((response) => {
+    //   dispatch(sendResult(SIGNUP_SUCCESS, response));
+    // }).catch(error => {
+    //   dispatch(sendResult(SIGNUP_FAILURE, error));
+    // });
   };
 }
 

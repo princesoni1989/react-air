@@ -58,6 +58,11 @@ export default {
             }
           }
         ]
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: path.resolve(__dirname, '../node_modules'),
+        loader: 'graphql-tag/loader'
       }
     ]
   },
