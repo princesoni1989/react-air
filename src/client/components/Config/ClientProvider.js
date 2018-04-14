@@ -14,7 +14,7 @@ export const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-const store = configureStore(window.App, client)
+const store = configureStore(client, window.App)
 
 export default class Client extends Component {
   render() {

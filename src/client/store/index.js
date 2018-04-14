@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
   middleware.push(logger);
 }
 
-const configureStore = (initialState = {}, client) => {
+const configureStore = (client, initialState = {}) => {
   middleware.push(thunk.withExtraArgument({client}))
   return createStore(
 	rootReducer,
