@@ -12,6 +12,7 @@ import {clean} from './build';
 
 const isDebug = !process.argv.includes('--release');
 const watchOptions = {}
+
 function getCompilationPromise(name, compiler, config) {
     return new Promise((resolve, reject) => {
         let timeStart = new Date();
@@ -69,16 +70,21 @@ async function serve() {
     const clientCompiler = webpack(webpackClientConfig);
     const serverCompiler = webpack(webpackServerConfig);
 
-    const clientCompilerPromise = getCompilationPromise('client', clientCompiler, webpackClientConfig);
-    const serverCompilerPromise = getCompilationPromise('server', serverCompiler, webpackServerConfig);
-    server.use(webpackDevMiddleWare(clientCompiler, {
-        publicPath: webpackClientConfig.output.publicPath,
-        logLevel: 'silent',
-    }))
+    const clientDevMiddleware = webpackDevMiddleWare(clientCompiler, {
+      publicPath: webpackClientConfig.output.publicPath,
+      logLevel: 'silent',
+    })
 
-    server.use(webpackHotMiddleWare(clientCompiler, {
-        log: false
-    }))
+   const clientHotMiddleware = webpackHotMiddleWare(clientCompiler, {
+     log: false
+   })
+
+
+    //Client dev middleware
+    server.use(clientDevMiddleware)
+
+    //Client Hot middleware
+    server.use(clientHotMiddleware)
 
 
     let appPromise;
@@ -112,6 +118,7 @@ async function serve() {
                 if (!updatedModules) {
                     if (fromUpdate) {
                         console.info(`${hmrPrefix}Update applied.`);
+                        app = require('../build/app').default;
                     }
                     return;
                 }
@@ -128,7 +135,7 @@ async function serve() {
             .catch(error => {
                 if (['abort', 'fail'].includes(app.hot.status())) {
                     console.warn(`${hmrPrefix}Cannot apply update.`);
-                    //delete require.cache[require.resolve('../build/app')];
+                    delete require.cache[require.resolve('../build/app')];
                     // eslint-disable-next-line global-require, import/no-unresolved
                     app = require('../build/app').default;
                     console.warn(`${hmrPrefix}App has been reloaded.`);
@@ -149,6 +156,8 @@ async function serve() {
         }
     });
 
+    const clientCompilerPromise =  getCompilationPromise('client', clientCompiler, webpackClientConfig);
+    const serverCompilerPromise =  getCompilationPromise('server', serverCompiler, webpackServerConfig);
 
     await clientCompilerPromise;
     await serverCompilerPromise;

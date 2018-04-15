@@ -12,7 +12,7 @@ let UserSchema = new Schema({
   email: { type: String, lowercase: true, unique: true },
   password: String,
 });
-let User = mongoose.model('User', UserSchema);
+let User  = mongoose.models.User || mongoose.model('User', UserSchema);
 
 
 export function login (req, res, next) {
