@@ -128,7 +128,7 @@ async function serve() {
             .catch(error => {
                 if (['abort', 'fail'].includes(app.hot.status())) {
                     console.warn(`${hmrPrefix}Cannot apply update.`);
-                    //delete require.cache[require.resolve('../build/app')];
+                    delete require.cache[require.resolve('../build/app')];
                     // eslint-disable-next-line global-require, import/no-unresolved
                     app = require('../build/app').default;
                     console.warn(`${hmrPrefix}App has been reloaded.`);

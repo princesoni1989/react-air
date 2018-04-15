@@ -9,7 +9,6 @@ import "./style.scss";
 
 class SignUp extends Component {
   static propTypes = {
-    signup: PropTypes.bool,
     userSignUp: PropTypes.func,
   }
 
@@ -36,9 +35,10 @@ class SignUp extends Component {
     });
   }
 
-  handleSignUp = () => {
+  handleSignUp = async () => {
     let {inputs: {name, email, password}} =  this.state;
-    this.props.userSignUp({name, email, password});
+    await this.props.userSignUp({name, email, password});
+    this.props.history.push('/users')
   }
 
   render() {
@@ -83,16 +83,10 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  signup: state.authentication.status,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   userSignUp: bindActionCreators(signUp, dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SignUp);
+export default connect(null,mapDispatchToProps)(SignUp);
 

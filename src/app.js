@@ -46,7 +46,6 @@ if(!module.hot){
 
 
 if (module.hot) {
-  module.hot.accept();
   app.hot = module.hot;
 }
 

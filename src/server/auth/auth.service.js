@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 import compose from 'composable-middleware';
 import User from '../api/user/user.model';
+import httpStatusCode from "server/constants/enums/HttpStatusCode";
 
 const validateJwt = expressJwt({
   secret: config.secret
@@ -21,7 +22,18 @@ export function isAuthenticated() {
       if(req.query && typeof req.headers.authorization === 'undefined') {
         req.headers.authorization = `Bearer ${req.cookies.token}`;
       }
-      validateJwt(req, res, next);
+      validateJwt(req, res, (err) => {
+        if (err) {
+          if (err.inner && err.inner.name == 'TokenExpiredError') {
+            res.sendError(httpStatusCode.UNAUTHORIZED, "Token expired")
+          } else {
+            return res.sendError(httpStatusCode.UNAUTHORIZED, "Access Denied")
+          }
+        }
+        else {
+          next();
+        }
+      });
     })
     // Attach user to request
     .use(function(req, res, next) {
