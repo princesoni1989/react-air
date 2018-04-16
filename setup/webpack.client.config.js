@@ -17,7 +17,7 @@ export default merge.smart(common, {
   name: "client",
   target: "web",
   entry: {
-    client: ["@babel/polyfill", "./src/client/ErrorPage.js"]
+    client: ["@babel/polyfill", "./src/client/index.js"]
   },
   output: {
     path: path.resolve(__dirname, "../build/public/assets"),
