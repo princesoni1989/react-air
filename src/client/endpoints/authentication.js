@@ -1,14 +1,14 @@
 export default({
   login: {
-    path: 'http://localhost:3000/api/login',
+    path: 'https://s5ooxumhz5.execute-api.us-east-1.amazonaws.com/dev/api/login',
     method: 'POST',
   },
   signup: {
-    path: 'http://localhost:3000/api/signup',
+    path: 'https://s5ooxumhz5.execute-api.us-east-1.amazonaws.com/dev/api/signup',
     method: 'POST',
   },
   loggedInUser: {
-    path: 'http://localhost:3000/api/loggedInUser',
+    path: 'https://s5ooxumhz5.execute-api.us-east-1.amazonaws.com/dev/api/loggedInUser',
     method: 'GET',
   }
 });

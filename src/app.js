@@ -8,7 +8,6 @@ import {
   serverRendering,
   serverRenderingError
 } from "client/serverRendering"
-import Api from './server';
 
    //express app settings
 const app = express();
@@ -16,9 +15,6 @@ app.use(express.static(path.resolve(__dirname, "public")));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
-//server api
-app.use('/api', Api);
 
 //route for server side rendering page
 app.get("*", serverRendering);

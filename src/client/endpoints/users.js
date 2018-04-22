@@ -1,6 +1,6 @@
 export default({
   users: {
-    path: 'http://localhost:3000/api/users',
+    path: 'https://s5ooxumhz5.execute-api.us-east-1.amazonaws.com/dev/api/users',
     method: 'GET',
   },
 });
