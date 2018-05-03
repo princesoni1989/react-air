@@ -2,16 +2,16 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 const Auth = () => (WrappedComponent) => {
-    class AuthWrapper extends Component {
-        render() {
-            return <WrappedComponent {...this.props}/>
-        }
+  class AuthWrapper extends Component {
+    render() {
+      return <WrappedComponent {...this.props}/>
     }
-    const mapStateToProps = (state) => ({
-        loggedInUser : state.loggedInUser.user
-    })
+  }
+  const mapStateToProps = (state) => ({
+    loggedInUser: state.loggedInUser.user
+  })
 
-    return connect(mapStateToProps)(AuthWrapper);
+  return connect(mapStateToProps)(AuthWrapper);
 }
 
 export default Auth;

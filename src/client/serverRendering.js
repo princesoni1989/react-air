@@ -1,15 +1,15 @@
-//client imports for server side rendering
+// client imports for server side rendering
 import React from "react";
 import ReactDom from "react-dom/server";
 import prettyError from "pretty-error"
 import Html from "components/Html";
 import App from "components/Config/ServerProvider";
 import ErrorPage from "components/Error/ErrorPage"
+import routes from "components/routes";
+import cookie from 'react-cookies'
 import fetchData from "./util/fetchData"
 import configureStore from "./store";
-import routes from "components/routes";
 import assets from "./assets.json"; // eslint-disable-line import/no-unresolved
-import cookie from 'react-cookies'
 
 const printError = new prettyError();
 export async function serverRendering(req, res, next) {
@@ -23,7 +23,7 @@ export async function serverRendering(req, res, next) {
     await fetchData(req.url, routes, store);
     const matchedRoute = routes.find(route => route.path === req.path);
 
-    //pushing required files
+    // pushing required files
     let scripts = [assets.vendors.js, assets.client.js]
     let styles = [assets.client.css];
     if (matchedRoute) {
@@ -44,7 +44,7 @@ export async function serverRendering(req, res, next) {
     return res.send(`<!DOCTYPE html>${html}`);
 
   } catch (err) {
-    next(err);
+    return next(err);
   }
 }
 

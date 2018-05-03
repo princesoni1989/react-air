@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
 
 class ErrorPage extends Component {
   static propTypes = {
@@ -15,7 +15,7 @@ class ErrorPage extends Component {
   };
 
   render() {
-    const { error } = this.props;
+    const {error} = this.props;
     if (__DEV__ && error) {
       return (
         <div>

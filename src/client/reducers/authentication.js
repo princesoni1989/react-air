@@ -3,7 +3,7 @@ import {
   LOGIN_SUCCESS,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
-} from '../constants';
+} from "../constants";
 
 const initialState = {
   status: false,
@@ -15,7 +15,7 @@ const authentication = function (state = initialState, action) {
     case LOGIN_SUCCESS:
     case SIGNUP_SUCCESS:
       return {
-        status: action.response.success, data: action.response,
+        status: true, data: action.response,
       };
 
     case LOGIN_FAILURE:

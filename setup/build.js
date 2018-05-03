@@ -4,12 +4,11 @@
 import webpack from "webpack";
 import path from "path";
 import cp from "child_process";
-import {cleanDir} from "./helper/fs";
 import mkdir from "make-dir";
-import {writeFile, copyDir} from "./helper/fs";
+import {writeFile, copyDir, cleanDir} from "./helper/fs";
 import pkg from "../package.json";
-
 import webpackConfig from "./webpack.config";
+
 const serverPath = path.join(webpackConfig[1].output.path, "app");
 
 let server = null;
@@ -33,6 +32,7 @@ export async function copy() {
         }
       }, null, 2)
     ),
+
     copyDir("src/public", "build/public")
   ]);
 }
@@ -42,7 +42,7 @@ export async function bundle() {
     webpack(webpackConfig).run((err, status) => {
       if (err) return reject(err);
 
-      console.log(status.toString(webpackConfig[0].stats));
+      console.log(status.toString(webpackConfig[0].stats)); // eslint-disable-line  no-console
       if (status.hasErrors()) {
         return new Error("Webpack compilation Error");
       }
@@ -52,7 +52,7 @@ export async function bundle() {
 }
 
 function runServer() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     function onData(data) {
       process.stdout.write(data);
     }
@@ -60,11 +60,12 @@ function runServer() {
     function onError(data) {
       process.stderr.write(data);
     }
+
     if (server) {
       server.kill('SIGTERM');
     }
     server = cp.spawn("node", [serverPath], {
-      env: Object.assign({ NODE_ENV: 'development' }, process.env),
+      env: Object.assign({NODE_ENV: 'development'}, process.env),
       silent: false,
     });
     server.stdout.on("data", onData);
@@ -79,7 +80,7 @@ export default async function build() {
   await copy();
 
   if (process.argv.includes("--serve")) {
-   await runServer();
+    await runServer();
   }
 }
 

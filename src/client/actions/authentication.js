@@ -4,67 +4,50 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   GET_USER,
-} from '../constants';
+} from "../constants";
 
-import endpoints from '../endpoints/authentication';
-import callApi from '../util/apiCaller';
+import endpoints from "../endpoints/authentication";
+import callApi from "../util/apiCaller";
 
-function sendResult (type, response) {
+function sendResult(type, response) {
   return {
     type,
     response,
   };
 }
 
-
-function loggedInUser (response) {
+function loggedInUser(response) {
   return {
     type: GET_USER,
     response,
   };
 }
 
-export default function login (data) {
-  return dispatch => {
-    return callApi({
-        path: endpoints.login.path,
-        method: endpoints.login.method,
-        body: data,
-      }
-    )
-      .then((response) => {
-          dispatch(sendResult(LOGIN_SUCCESS, response));
-      }).catch(error => {
-        dispatch(sendResult(LOGIN_FAILURE, error));
-      });
-  };
+export default function login(data) {
+  return dispatch => callApi({
+    path: endpoints.login.path,
+    method: endpoints.login.method,
+    body: data,
+  })
+    .then((response) => dispatch(sendResult(LOGIN_SUCCESS, response)))
+    .catch(error => dispatch(sendResult(LOGIN_FAILURE, error)));
 }
 
-export function signUp (data) {
-  return dispatch => {
-    return callApi({
-        path: endpoints.signup.path,
-        method: endpoints.signup.method,
-        body: data,
-      }
-    ).then((response) => {
-      dispatch(sendResult(SIGNUP_SUCCESS, response));
-    }).catch(error => {
-      dispatch(sendResult(SIGNUP_FAILURE, error));
-    });
-  };
+export function signUp(data) {
+  return dispatch => callApi({
+    path: endpoints.signup.path,
+    method: endpoints.signup.method,
+    body: data,
+  })
+    .then((response) => dispatch(sendResult(SIGNUP_SUCCESS, response)))
+    .catch(error => dispatch(sendResult(SIGNUP_FAILURE, error)));
 }
 
-export function fetchLoggedInUsers (headers) {
-  return dispatch => {
-    return callApi({
-        path: endpoints.loggedInUser.path,
-        method: endpoints.loggedInUser.method,
-        headers,
-      }
-    )
-      .then((response) => {
-        dispatch(loggedInUser(response));
-      });
-  };
+export function fetchLoggedInUsers(headers) {
+  return dispatch => callApi({
+    path: endpoints.loggedInUser.path,
+    method: endpoints.loggedInUser.method,
+    headers,
+  })
+    .then((response) => dispatch(loggedInUser(response)));
 }

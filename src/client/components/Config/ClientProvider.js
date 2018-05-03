@@ -7,12 +7,12 @@ import App from "components/App";
 const store = configureStore(window.App);
 
 export default function Client() {
-    return (
-        <Provider store={store}>
-            <Router >
-                <App />
-            </Router>
-        </Provider>
-    )
+  return (
+    <Provider store={store}>
+      <Router >
+        <App />
+      </Router>
+    </Provider>
+  )
 }
 

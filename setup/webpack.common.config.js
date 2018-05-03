@@ -37,7 +37,7 @@ export default {
                 options: {
                   name: staticAssetName,
                   limit: 4096,
-                  emitFile: false
+                  emitFile: true
                 }
               },
               {
@@ -45,7 +45,7 @@ export default {
                 options: {
                   name: staticAssetName,
                   limit: 4096,
-                  emitFile: false
+                  emitFile: true
                 }
               }
             ]
