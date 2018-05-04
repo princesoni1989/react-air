@@ -4,6 +4,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   GET_USER,
+  RESET
 } from "../constants";
 
 import endpoints from "../endpoints/authentication";
@@ -20,6 +21,11 @@ function loggedInUser(response) {
   return {
     type: GET_USER,
     response,
+  };
+}
+export function reset() {
+  return {
+    type: RESET
   };
 }
 

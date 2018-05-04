@@ -12,6 +12,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const LOGGED_IN_USER = 'LOGGED_IN_USER';
+export const RESET = 'RESET';
 export const GET_USERS = 'GET_USERS';
 export const GET_USER = 'GET_USER';
 

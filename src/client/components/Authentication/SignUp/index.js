@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {NavLink} from "react-router-dom";
-import {signUp} from "../../../actions/authentication";
+import {signUp, reset} from "../../../actions/authentication";
 import "./style.scss";
 
 class SignUp extends Component {
@@ -23,6 +23,10 @@ class SignUp extends Component {
     error: false
   }
 
+  componentDidMount() {
+    this.props.reset();
+  }
+
   changeHandler = (event, property) => {
     const {inputs} = this.state;
     inputs[event.target.name] = event.target.value;
@@ -39,16 +43,22 @@ class SignUp extends Component {
     const {inputs: {name, email, password}} =  this.state;
     const {signup} = this.props;
     await this.props.userSignUp({name, email, password});
+    if (!signup) {
+      this.setState({error: true})
+    }
+  }
+
+  checkRedirection = () => {
+    const {signup} = this.props;
     if (signup) {
       this.props.history.push("/login")
-    } else {
-      this.setState({error: true})
     }
   }
 
   render() {
     const {error, type} = this.state;
     const renderError = error ? <div className="danger">Error Please try again</div> : null;
+    this.checkRedirection()
     return (
       <div className="signup-form">
         <div className="seperator-line">
@@ -93,6 +103,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => ({
   userSignUp: bindActionCreators(signUp, dispatch),
+  reset: bindActionCreators(reset, dispatch)
 });
 
 export default connect(
