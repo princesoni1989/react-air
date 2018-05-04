@@ -24,6 +24,7 @@ function loggedInUser(response) {
   };
 }
 export function reset() {
+  console.log("dsdsdsdds>>>>>>> called")
   return {
     type: RESET
   };

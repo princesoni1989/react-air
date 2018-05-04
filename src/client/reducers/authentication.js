@@ -3,26 +3,27 @@ import {
   LOGIN_SUCCESS,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
+  RESET
 } from "../constants";
 
 const initialState = {
-  status: false,
+  loginStatus: false,
+  signupStatus: false,
   data: {},
 };
 
 const authentication = function (state = initialState, action) {
   switch (action.type) {
     case LOGIN_SUCCESS:
+      return {loginStatus: true, data: action.response}
     case SIGNUP_SUCCESS:
-      return {
-        status: true, data: action.response,
-      };
-
+      return {signupStatus: true, data: action.response};
     case LOGIN_FAILURE:
+      return {loginStatus: false, data: action.response}
     case SIGNUP_FAILURE:
-      return {
-        status: false, data: action.response,
-      };
+      return {signupStatus: false, data: action.response};
+    case RESET:
+      return initialState;
     default:
       return state;
   }
