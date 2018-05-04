@@ -10,6 +10,7 @@ import "./style.scss";
 class Login extends Component {
   static propTypes = {
     userLogin: PropTypes.func.isRequired,
+    loginStatus: PropTypes.bool,
     response: PropTypes.any,
     history: PropTypes.any
   };
@@ -23,7 +24,7 @@ class Login extends Component {
     error: false
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.reset();
   }
 
@@ -43,19 +44,16 @@ class Login extends Component {
     const {inputs: {email, password}} = this.state;
     await this.props.userLogin({email, password});
     AuthService.setToken(this.props.response.token)
-  };
-
-  checkRedirection = () => {
-    const {login} = this.props;
-    if (login) {
+    if (this.props.loginStatus) {
       this.props.history.push("/users")
+    }else{
+      this.setState({error: true})
     }
-  }
+  };
 
   render() {
     const {error} = this.state;
     const renderError = error ? <div className="danger">Bad credentials</div> : null;
-    this.checkRedirection();
     return (
       <div className="login-form-container">
         <div className="seperator-line">
@@ -87,7 +85,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  login: state.authentication.status,
+  loginStatus: state.authentication.loginStatus,
   response: state.authentication.data,
 });
 

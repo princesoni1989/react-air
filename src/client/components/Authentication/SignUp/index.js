@@ -8,7 +8,7 @@ import "./style.scss";
 
 class SignUp extends Component {
   static propTypes = {
-    signup: PropTypes.bool,
+    signupStatus: PropTypes.bool,
     userSignUp: PropTypes.func,
     history: PropTypes.any
   }
@@ -41,24 +41,17 @@ class SignUp extends Component {
 
   handleSignUp = async() => {
     const {inputs: {name, email, password}} =  this.state;
-    const {signup} = this.props;
     await this.props.userSignUp({name, email, password});
-    if (!signup) {
+    if (this.props.signupStatus) {
+       this.props.history.push("/login")
+    }else{
       this.setState({error: true})
-    }
-  }
-
-  checkRedirection = () => {
-    const {signup} = this.props;
-    if (signup) {
-      this.props.history.push("/login")
     }
   }
 
   render() {
     const {error, type} = this.state;
     const renderError = error ? <div className="danger">Error Please try again</div> : null;
-    this.checkRedirection()
     return (
       <div className="signup-form">
         <div className="seperator-line">
@@ -98,7 +91,7 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => ({
-  signup: state.authentication.status,
+  signupStatus: state.authentication.signupStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
