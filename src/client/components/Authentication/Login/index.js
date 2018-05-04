@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types"
 import {bindActionCreators} from "redux";
-import login from "actions/authentication";
+import login, {reset} from "actions/authentication";
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 import AuthService from "client/services/authService"
@@ -24,6 +24,10 @@ class Login extends Component {
     error: false
   }
 
+  componentDidMount() {
+    this.props.reset();
+  }
+
   changeHandler = (event, property) => {
     const {inputs} = this.state;
     inputs[event.target.name] = event.target.value;
@@ -38,26 +42,28 @@ class Login extends Component {
   };
   handleLogin = async() => {
     const {inputs: {email, password}} = this.state;
-    const {login} = this.props;
     await this.props.userLogin({email, password});
-    if(login){
-      AuthService.setToken(this.props.response.token)
-      this.props.history.push("/users")
-    }else{
-      this.setState({error: true})
-    }
+    AuthService.setToken(this.props.response.token)
   };
+
+  checkRedirection = () => {
+    const {login} = this.props;
+    if (login) {
+      this.props.history.push("/users")
+    }
+  }
 
   render() {
     const {error} = this.state;
-    const renderError = error? <div className="danger">Bad credentials</div> : null;
+    const renderError = error ? <div className="danger">Bad credentials</div> : null;
+    this.checkRedirection();
     return (
       <div className="login-form-container">
         <div className="seperator-line">
           {renderError}
           <h1 className="heading">Login Form</h1>
         </div>
-        <p className="form-group text-danger" />
+        <p className="form-group text-danger"/>
         <ul className="login-form">
           <li className="form-group">
             <input className="form-control" id="email" type="email" name="email" placeholder="Email"
@@ -87,6 +93,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  userLogin: bindActionCreators(login, dispatch)
+  userLogin: bindActionCreators(login, dispatch),
+  reset: bindActionCreators(reset, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

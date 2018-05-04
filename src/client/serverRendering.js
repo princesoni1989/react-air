@@ -4,7 +4,7 @@ import ReactDom from "react-dom/server";
 import prettyError from "pretty-error"
 import Html from "components/Html";
 import App from "components/Config/ServerProvider";
-import ErrorPage from "components/Error/ErrorPage"
+import ServerErrorPage from "components/Error/ServerErrorPage"
 import routes from "components/routes";
 import cookie from 'react-cookies'
 import fetchData from "./util/fetchData"
@@ -50,7 +50,7 @@ export async function serverRendering(req, res, next) {
 
 export async function serverRenderingError(err, req, res) {
   console.log(printError.render(err))
-  const markUp = ReactDom.renderToString(<ErrorPage error={err}/>)
+  const markUp = ReactDom.renderToString(<ServerErrorPage error={err}/>)
   const data = {
     title: 'Internal Server Error',
     description: err.message,

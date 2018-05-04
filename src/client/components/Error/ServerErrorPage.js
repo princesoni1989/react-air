@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 
-class ErrorPage extends Component {
+class ServerErrorPage extends Component {
   static propTypes = {
     error: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -34,4 +34,4 @@ class ErrorPage extends Component {
   }
 }
 
-export default ErrorPage;
+export default ServerErrorPage;
