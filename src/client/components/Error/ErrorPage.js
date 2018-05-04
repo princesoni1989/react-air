@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import s from './ErrorPage.scss';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
 
-class ErrorPage extends React.Component {
+class ErrorPage extends Component {
   static propTypes = {
     error: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -16,11 +15,12 @@ class ErrorPage extends React.Component {
   };
 
   render() {
-    if (__DEV__ && this.props.error) {
+    const {error} = this.props;
+    if (__DEV__ && error) {
       return (
         <div>
-          <h1>{this.props.error.name}</h1>
-          <pre>{this.props.error.stack}</pre>
+          <h1>{error.name}</h1>
+          <pre>{error.stack}</pre>
         </div>
       );
     }

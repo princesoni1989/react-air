@@ -1,6 +1,6 @@
 import {
   GET_USER,
-} from '../constants';
+} from "../constants";
 
 const initialState = {
   loading: true,
@@ -9,11 +9,11 @@ const initialState = {
 
 const loggedInUser = function (state = initialState, action) {
   switch (action.type) {
-    case GET_USER: {
+    case GET_USER:
+    {
       return {
-         user: action.response,
+        user: action.response,
       };
-
     }
     default:
       return state;

@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware } from 'redux';
+import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import logger from "./logger/client";
-import rootReducer from '../reducers';
+import rootReducer from "../reducers";
 
 const middleware = [thunk];
 if (process.env.BROWSER) {

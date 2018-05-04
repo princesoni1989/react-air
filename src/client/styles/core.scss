@@ -516,7 +516,7 @@ body {
   vertical-align: middle;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('../public/sprite.png');
+  background-image: url('../../public/sprite.png');
   background-repeat: no-repeat;
   background-size: 500px 1000px;
 }
@@ -561,9 +561,9 @@ a {
     -o-transform: translate3d(300px, 0, 0);
     transform: translate3d(300px, 0, 0);
 
-    -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0 0 50px rgba(0,0,0,0.5);
-    box-shadow: 0 50px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 50px rgba(0, 0, 0, 0.5);
   }
   .body-close {
     z-index: 9;
@@ -572,11 +572,11 @@ a {
   }
 
   .side-nav {
-    -webkit-transform: translate3d(0,0,0);
-    -moz-transform: translate3d(0,0,0);
-    -ms-transform: translate3d(0,0,0);
-    -o-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -633,8 +633,6 @@ h3 {
   font-weight: 300;
 }
 
-
-
 .form-group {
   position: relative;
   margin-bottom: 15px;
@@ -687,8 +685,6 @@ h3 {
   background-color: #ff244a;
 }
 
-
-
 .skip-page {
   a {
     display: inline-block;
@@ -697,18 +693,21 @@ h3 {
   }
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
 }
-html,body {
-  height:100%
+
+html, body {
+  height: 100%
 }
+
 body {
   padding: .1px;
   background-color: rgb(19, 35, 47);
 }
+
 #app {
   background: rgba(19, 35, 47, 0.9);
-  height:100%;
+  height: 100%;
 }

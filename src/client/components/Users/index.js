@@ -1,18 +1,19 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import PropTypes from "prop-types";
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import fetchUsers from '../../actions/users';
-import AuthService from '../../services/authService'
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import fetchUsers from "../../actions/users";
+import AuthService from "../../services/authService"
 import Auth from "../../decorator/Auth"
 
-import './style.scss';
+import "./style.scss";
 
 @Auth()
 class Users extends Component {
   static propTypes = {
     users: PropTypes.array,
     getUsers: PropTypes.func,
+    history: PropTypes.any
   };
 
   static defaultProps = {
@@ -25,11 +26,18 @@ class Users extends Component {
 
   logOut = () => {
     AuthService.removeToken()
-    this.props.history.push('/login')
+    this.props.history.push("/login")
   }
 
   render() {
-    let {users} = this.props;
+    const {users} = this.props;
+    const renderUsers = users.map((user) => (
+        <tr key={user._id}>
+          <td>{user.name}</td>
+          <td>{user.email}</td>
+        </tr>
+      )
+    )
     return (
       <div>
         <nav>
@@ -37,7 +45,7 @@ class Users extends Component {
             <li><a onClick={this.logOut}>Logout</a></li>
           </ul>
         </nav>
-        <table className='users'>
+        <table className="users">
           <thead>
           <tr>
             <th>User Name</th>
@@ -45,14 +53,7 @@ class Users extends Component {
           </tr>
           </thead>
           <tbody>
-          {users.map((user) => {
-            return (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-              </tr>
-            );
-          })}
+          {renderUsers}
           </tbody>
         </table>
       </div>
@@ -61,13 +62,12 @@ class Users extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    users: state.users.userList
+  users: state.users.userList
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getUsers: bindActionCreators(fetchUsers, dispatch),
+  getUsers: bindActionCreators(fetchUsers, dispatch),
 });
-
 
 
 export default connect(

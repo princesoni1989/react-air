@@ -1,6 +1,6 @@
 import {
   GET_USERS,
-} from '../constants';
+} from "../constants";
 
 const initialState = {
   userList: [],

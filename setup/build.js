@@ -2,13 +2,16 @@
  * Created by ttnd on 15/3/18.
  */
 import webpack from "webpack";
-import { cleanDir } from "./helper/fs";
+import path from "path";
+import cp from "child_process";
 import mkdir from "make-dir";
-import { writeFile, copyDir } from "./helper/fs";
+import {writeFile, copyDir, cleanDir} from "./helper/fs";
 import pkg from "../package.json";
-
 import webpackConfig from "./webpack.config";
-import runServer from "./runServer"
+
+const serverPath = path.join(webpackConfig[1].output.path, "app");
+
+let server = null;
 
 export async function clean() {
   return Promise.all([
@@ -29,6 +32,7 @@ export async function copy() {
         }
       }, null, 2)
     ),
+
     copyDir("src/public", "build/public")
   ]);
 }
@@ -38,7 +42,7 @@ export async function bundle() {
     webpack(webpackConfig).run((err, status) => {
       if (err) return reject(err);
 
-      console.log(status.toString(webpackConfig[0].stats));
+      console.log(status.toString(webpackConfig[0].stats)); // eslint-disable-line  no-console
       if (status.hasErrors()) {
         return new Error("Webpack compilation Error");
       }
@@ -47,12 +51,41 @@ export async function bundle() {
   });
 }
 
+function runServer() {
+  return new Promise((resolve) => {
+    function onData(data) {
+      process.stdout.write(data);
+    }
+
+    function onError(data) {
+      process.stderr.write(data);
+    }
+
+    if (server) {
+      server.kill('SIGTERM');
+    }
+    server = cp.spawn("node", [serverPath], {
+      env: Object.assign({NODE_ENV: 'development'}, process.env),
+      silent: false,
+    });
+    server.stdout.on("data", onData);
+    server.stderr.on("data", onError);
+  })
+
+}
+
 export default async function build() {
   await clean();
   await bundle();
   await copy();
 
-  if(process.argv.includes("--serve")){
+  if (process.argv.includes("--serve")) {
     await runServer();
   }
 }
+
+process.on("exit", () => {
+  if (server) {
+    server.kill('SIGTERM');
+  }
+});
